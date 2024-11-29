@@ -28,7 +28,7 @@ print(avl_tree.search_product(1).product)
 print(avl_tree.search_product(400).product)
 print(avl_tree.search_product(240).product)
 
-#
+#Product correltaion graph
 graph = CorrelationGraph(products)
 
 # Create correlations
