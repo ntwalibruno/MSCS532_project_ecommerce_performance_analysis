@@ -11,10 +11,12 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'utiliti
 from product import Product
 from avl_tree import AVLTree
 from utils import load_products_from_json  
+from graph import CorrelationGraph
 
-prooductData = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/products.json'))
-products = load_products_from_json(prooductData)
+productData = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/products.json'))
+products = load_products_from_json(productData)
 
+#AVL Tree
 avl_tree = AVLTree()
 avl_tree.insert_products(products)
 
@@ -26,4 +28,22 @@ print(avl_tree.search_product(1).product)
 print(avl_tree.search_product(400).product)
 print(avl_tree.search_product(240).product)
 
+#
+graph = CorrelationGraph(products)
 
+# Create correlations
+graph.correlate_by_type()
+graph.correlate_by_creator()
+graph.correlate_by_insert_date(time_window=5)
+
+# Display the graph with correlations
+# graph.display_graph()
+
+top_correlated = graph.get_correlated_products(products[34], top_n=10)
+
+
+# Display the top correlated products
+print(products[34])
+print("\n")
+for p in top_correlated:
+    print(f"Product ID {p.id}: {p.product_name} (Type: {p.product_type}, Creator: {p.creator_id})")
